@@ -1,0 +1,6 @@
+@Myflix.AuthService_HostAddress = http://localhost:5109
+
+GET {{Myflix.AuthService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
