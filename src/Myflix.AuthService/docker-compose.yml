@@ -1,0 +1,35 @@
+﻿networks:
+  default:
+
+services:
+  myflix-auth:
+    container_name: myflix-auth
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - sql_server
+    networks:
+      - default
+    restart: always
+
+  sql_server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql_server
+    environment:
+      - MSSQL_SA_PASSWORD=ILikePink!
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - db_data:/var/opt/mssql
+    networks:
+      default:
+        aliases:
+          - mssql_server
+    restart: always
+
+volumes:
+  db_data:
