@@ -2,7 +2,7 @@
 
 namespace Myflix.AuthService.Models
 {
-    public class User : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
     }
 }
