@@ -3,7 +3,7 @@
 
 services:
   myflix-auth:
-    container_name: myflix-auth
+    container_name: myflix_auth
     build:
       context: .
       dockerfile: Dockerfile
