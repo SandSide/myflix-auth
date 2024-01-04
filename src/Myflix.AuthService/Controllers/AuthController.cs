@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Myflix.AuthService.Models;
+using Myflix.AuthService.Services;
 
 namespace Myflix.AuthService.Controllers
 {
@@ -10,11 +11,13 @@ namespace Myflix.AuthService.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly JwtService _jwtService;
 
-        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, JwtService jwtService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _jwtService = jwtService;
         }
 
         [HttpPost("login")]
@@ -24,7 +27,8 @@ namespace Myflix.AuthService.Controllers
 
             if (result.Succeeded)
             {
-                return Ok("Signed In");
+                var token = _jwtService.GenerateAuthToken(model.Username);
+                return Ok(token);
             }
 
             return Unauthorized();
