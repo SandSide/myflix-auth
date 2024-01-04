@@ -22,7 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<JwtService, JwtService>();
+builder.Services.AddScoped<ITokenService, JwtService>();
 
 var app = builder.Build();
 

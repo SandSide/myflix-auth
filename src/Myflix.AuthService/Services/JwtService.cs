@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Myflix.AuthService.Services
 {
-    public class JwtService
+    public class JwtService : ITokenService
     { 
         public string GenerateAuthToken(string username)
         {

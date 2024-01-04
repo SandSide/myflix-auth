@@ -11,13 +11,13 @@ namespace Myflix.AuthService.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly JwtService _jwtService;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, JwtService jwtService)
+        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ITokenService tokenService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _jwtService = jwtService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("login")]
@@ -27,7 +27,7 @@ namespace Myflix.AuthService.Controllers
 
             if (result.Succeeded)
             {
-                var token = _jwtService.GenerateAuthToken(model.Username);
+                var token = _tokenService.GenerateAuthToken(model.Username);
                 return Ok(token);
             }
 
