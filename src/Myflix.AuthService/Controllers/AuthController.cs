@@ -29,5 +29,27 @@ namespace Myflix.AuthService.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Username };
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return Ok(new { Message = "User registered successfully" });
+                }
+ 
+                return BadRequest(new { Message = "Registration failed", Errors = result.Errors });
+
+            }
+
+            return BadRequest(new { Message = "Invalid registration data" });
+        }
     }
 }
