@@ -55,5 +55,11 @@ namespace Myflix.AuthService.Controllers
 
             return BadRequest(new { Message = "Invalid registration data" });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Test()
+        {
+            return Ok(new { Message = "Hello" });
+        }
     }
 }
