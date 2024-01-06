@@ -2,13 +2,13 @@
   default:
 
 services:
-  myflix-auth:
+  myflix_auth:
     container_name: myflix_auth
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "80:8080"
     depends_on:
       - sql_server
     networks:
