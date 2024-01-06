@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
 using Myflix.AuthService.Data;
 using Myflix.AuthService.Models;
 using Myflix.AuthService.Services;
@@ -25,6 +27,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, JwtService>();
 
 var app = builder.Build();
+
+// Ensure the database is created and populated
+using (var scope = app.Services.CreateScope())
+{
+    // try to migrate db
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+
+    context.SaveChanges();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
