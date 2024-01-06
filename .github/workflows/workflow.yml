@@ -1,5 +1,8 @@
 name: Build and push docker image
 on:
+  push:
+    branches:
+      - test/devops
   pull_request:
     types: [closed]
     branches:
@@ -9,7 +12,6 @@ on:
 jobs:
     build_image:
         runs-on: ubuntu-latest
-        if: github.event.pull_request.merged == true
 
         steps:
             - name: Checkout code
@@ -24,6 +26,6 @@ jobs:
             - name: Build and push docker image
               uses: docker/build-push-action@v5
               with:
-                context: ./src/Myflix.Auth
+                context: ./src/Myflix.AuthService
                 push: true
                 tags: sandside/myflix:auth
